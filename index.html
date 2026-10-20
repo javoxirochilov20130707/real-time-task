@@ -259,6 +259,12 @@
       justify-content: space-between;
       border-bottom: 1px solid var(--border-subtle);
       height: var(--topbar-height);
+      position: relative;
+    }
+
+    .sidebar.collapsed .sidebar-header {
+      padding: 16px 0;
+      justify-content: center;
     }
 
     .brand-logo {
@@ -266,6 +272,11 @@
       align-items: center;
       gap: 12px;
       overflow: hidden;
+    }
+
+    .sidebar.collapsed .brand-logo {
+      margin: 0 auto;
+      justify-content: center;
     }
 
     .logo-icon-wrap {
@@ -294,8 +305,7 @@
     }
 
     .sidebar.collapsed .brand-meta {
-      opacity: 0;
-      pointer-events: none;
+      display: none !important;
     }
 
     .brand-title {
@@ -394,13 +404,33 @@
     }
 
     .sidebar.collapsed .workspace-switcher {
-      padding: 8px;
+      margin: 10px auto;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: var(--radius-md);
+    }
+
+    .sidebar.collapsed .workspace-info {
+      gap: 0;
+      margin: 0;
       justify-content: center;
     }
 
     .sidebar.collapsed .workspace-text,
-    .sidebar.collapsed .workspace-switcher i[data-lucide="chevrons-up-down"] {
-      display: none;
+    .sidebar.collapsed .workspace-switcher svg,
+    .sidebar.collapsed .workspace-switcher i {
+      display: none !important;
+    }
+
+    .sidebar.collapsed .workspace-avatar {
+      width: 32px;
+      height: 32px;
+      font-size: 11px;
+      flex-shrink: 0;
     }
 
     /* Sidebar Navigation Links */
@@ -486,10 +516,6 @@
       text-overflow: ellipsis;
     }
 
-    .sidebar.collapsed .nav-label {
-      display: none;
-    }
-
     .nav-badge {
       font-size: 10px;
       font-weight: 700;
@@ -506,8 +532,39 @@
       border-color: transparent;
     }
 
+    .sidebar.collapsed .sidebar-nav-scroll {
+      padding: 12px 0;
+      align-items: center;
+    }
+
+    .sidebar.collapsed .nav-list {
+      align-items: center;
+      width: 100%;
+    }
+
+    .sidebar.collapsed .nav-list li {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .sidebar.collapsed .nav-item-btn {
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      justify-content: center;
+      gap: 0;
+      margin: 0 auto;
+      border-radius: var(--radius-md);
+    }
+
+    .sidebar.collapsed .nav-item-btn .nav-icon {
+      margin: 0;
+    }
+
+    .sidebar.collapsed .nav-label,
     .sidebar.collapsed .nav-badge {
-      display: none;
+      display: none !important;
     }
 
     /* Sidebar Footer / User Profile */
@@ -623,32 +680,63 @@
       color: var(--text-subtle);
     }
 
+    .sidebar.collapsed .sidebar-footer {
+      padding: 12px 0;
+      align-items: center;
+    }
+
+    .sidebar.collapsed .storage-widget {
+      display: none !important;
+    }
+
+    .sidebar.collapsed .user-profile-btn {
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      justify-content: center;
+      gap: 0;
+      margin: 0 auto;
+      border-radius: var(--radius-md);
+    }
+
     .sidebar.collapsed .user-info,
-    .sidebar.collapsed .user-profile-btn i[data-lucide="more-vertical"] {
-      display: none;
+    .sidebar.collapsed .user-profile-btn svg,
+    .sidebar.collapsed .user-profile-btn i {
+      display: none !important;
+    }
+
+    .sidebar.collapsed .avatar-wrapper {
+      margin: 0;
     }
 
     .collapse-toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: -12px;
       width: 24px;
       height: 24px;
-      border-radius: var(--radius-sm);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--text-muted);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-medium);
       background: var(--bg-surface-elevated);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
       transition: all var(--transition-fast);
-      align-self: flex-end;
+      cursor: pointer;
+      z-index: 40;
     }
 
     .collapse-toggle-btn:hover {
       color: var(--text-main);
       background: var(--bg-surface-hover);
+      border-color: var(--primary);
+      transform: scale(1.12);
     }
 
     .sidebar.collapsed .collapse-toggle-btn {
-      align-self: center;
+      right: -12px;
     }
 
     /* ==========================================================================
@@ -2523,28 +2611,28 @@
         <div class="nav-group-title">Core Workspace</div>
         <ul class="nav-list">
           <li>
-            <button class="nav-item-btn active" data-view="dashboard">
+            <button class="nav-item-btn active" data-view="dashboard" title="Dashboard">
               <span class="nav-icon"><i data-lucide="layout-dashboard"></i></span>
               <span class="nav-label">Dashboard</span>
               <span class="nav-badge" id="navStatTotal">28</span>
             </button>
           </li>
           <li>
-            <button class="nav-item-btn" data-view="kanban">
+            <button class="nav-item-btn" data-view="kanban" title="Kanban Board">
               <span class="nav-icon"><i data-lucide="trello"></i></span>
               <span class="nav-label">Kanban Board</span>
               <span class="nav-badge" id="navStatBoard">5 cols</span>
             </button>
           </li>
           <li>
-            <button class="nav-item-btn" data-view="my-tasks">
+            <button class="nav-item-btn" data-view="my-tasks" title="My Tasks">
               <span class="nav-icon"><i data-lucide="check-square"></i></span>
               <span class="nav-label">My Tasks</span>
               <span class="nav-badge" id="navStatMyTasks">6</span>
             </button>
           </li>
           <li>
-            <button class="nav-item-btn" data-view="projects">
+            <button class="nav-item-btn" data-view="projects" title="Projects">
               <span class="nav-icon"><i data-lucide="folder-kanban"></i></span>
               <span class="nav-label">Projects</span>
               <span class="nav-badge" id="navStatProjects">5</span>
@@ -2556,19 +2644,19 @@
         <div class="nav-group-title">Planning & Delivery</div>
         <ul class="nav-list">
           <li>
-            <button class="nav-item-btn" data-view="calendar">
+            <button class="nav-item-btn" data-view="calendar" title="Calendar">
               <span class="nav-icon"><i data-lucide="calendar"></i></span>
               <span class="nav-label">Calendar</span>
             </button>
           </li>
           <li>
-            <button class="nav-item-btn" data-view="timeline">
+            <button class="nav-item-btn" data-view="timeline" title="Timeline / Gantt">
               <span class="nav-icon"><i data-lucide="git-commit"></i></span>
               <span class="nav-label">Timeline / Gantt</span>
             </button>
           </li>
           <li>
-            <button class="nav-item-btn" data-view="analytics">
+            <button class="nav-item-btn" data-view="analytics" title="Analytics & Reports">
               <span class="nav-icon"><i data-lucide="line-chart"></i></span>
               <span class="nav-label">Analytics & Reports</span>
             </button>
@@ -2579,14 +2667,14 @@
         <div class="nav-group-title">Collaboration</div>
         <ul class="nav-list">
           <li>
-            <button class="nav-item-btn" data-view="team">
+            <button class="nav-item-btn" data-view="team" title="Team & Live Chat">
               <span class="nav-icon"><i data-lucide="message-square"></i></span>
               <span class="nav-label">Team & Live Chat</span>
               <span class="nav-badge" style="background: var(--status-success-subtle); color: var(--status-success); border-color: rgba(16,185,129,0.3);">Online</span>
             </button>
           </li>
           <li>
-            <button class="nav-item-btn" data-view="settings">
+            <button class="nav-item-btn" data-view="settings" title="Settings">
               <span class="nav-icon"><i data-lucide="settings"></i></span>
               <span class="nav-label">Settings</span>
             </button>
@@ -2606,7 +2694,7 @@
           </div>
         </div>
 
-        <button class="user-profile-btn" id="userProfileBtn">
+        <button class="user-profile-btn" id="userProfileBtn" title="Alex Morgan (Lead Product Architect)">
           <div class="avatar-wrapper">
             <div class="user-avatar" id="currentUserAvatar">AM</div>
             <div class="status-dot"></div>
@@ -3841,11 +3929,8 @@
         collapseBtn.addEventListener('click', () => {
           sidebar.classList.toggle('collapsed');
           const isCollapsed = sidebar.classList.contains('collapsed');
-          const icon = document.getElementById('collapseIcon');
-          if (icon) {
-            icon.setAttribute('data-lucide', isCollapsed ? 'chevron-right' : 'chevron-left');
-            if (window.lucide) lucide.createIcons();
-          }
+          collapseBtn.innerHTML = `<i data-lucide="${isCollapsed ? 'chevron-right' : 'chevron-left'}" id="collapseIcon"></i>`;
+          if (window.lucide) lucide.createIcons();
         });
 
         // Mobile Menu Trigger
