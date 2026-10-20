@@ -2682,23 +2682,6 @@
 
         <!-- 1. DASHBOARD VIEW -->
         <section class="page-view active" id="view-dashboard">
-          <!-- Hero Summary Banner -->
-          <div class="dashboard-hero-banner">
-            <div class="hero-banner-content">
-              <h2>Welcome back, <span id="bannerGreetingName">Alex</span>! 👋</h2>
-              <p>You have <strong id="bannerDueCount" style="color: var(--text-main);">3 tasks</strong> scheduled for completion today across <span id="bannerProjectCount">5 active projects</span>. Overall sprint progress is on track.</p>
-            </div>
-            <div class="hero-banner-stats">
-              <div class="banner-stat-box">
-                <div class="banner-stat-num" id="heroStatCompletion">68%</div>
-                <div class="banner-stat-lbl">Sprint Velocity</div>
-              </div>
-              <div class="banner-stat-box">
-                <div class="banner-stat-num" id="heroStatOverdue" style="color: var(--status-danger);">1</div>
-                <div class="banner-stat-lbl">Critical Blockers</div>
-              </div>
-            </div>
-          </div>
 
           <!-- KPI Metric Cards -->
           <div class="kpi-grid">
@@ -4222,8 +4205,10 @@
         document.getElementById('kpiInProgress').textContent = inProgress;
         document.getElementById('kpiCompleted').textContent = completed;
         document.getElementById('kpiOverdue').textContent = overdue;
-        document.getElementById('heroStatCompletion').textContent = `${completionPct}%`;
-        document.getElementById('heroStatOverdue').textContent = overdue;
+        const elHeroComp = document.getElementById('heroStatCompletion');
+        if (elHeroComp) elHeroComp.textContent = `${completionPct}%`;
+        const elHeroOverdue = document.getElementById('heroStatOverdue');
+        if (elHeroOverdue) elHeroOverdue.textContent = overdue;
         document.getElementById('sidebarVelocityText').textContent = `${completionPct}% Done`;
         document.getElementById('sidebarVelocityFill').style.width = `${completionPct}%`;
 
@@ -4233,7 +4218,8 @@
         
         const myTasksCount = tasks.filter(t => t.assigneeId === Store.data.currentUser.id && t.column !== 'Done').length;
         document.getElementById('navStatMyTasks').textContent = myTasksCount;
-        document.getElementById('bannerDueCount').textContent = `${myTasksCount} tasks`;
+        const elBannerDue = document.getElementById('bannerDueCount');
+        if (elBannerDue) elBannerDue.textContent = `${myTasksCount} tasks`;
 
         // Render Activity Feed
         const activityContainer = document.getElementById('recentActivityList');
